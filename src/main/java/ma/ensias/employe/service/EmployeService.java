@@ -8,10 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import java.util.List;
+
 public class EmployeService {
 
     @Autowired
     private EmployeRepo employeRepo;
+
+    // added
+    @PersistenceContext
+    private EntityManager entityManager;
+    // added
+    public List<?> searchByName(String name) {
+        String sql = "SELECT * FROM employe WHERE name = '" + name + "'";
+        return entityManager.createNativeQuery(sql).getResultList();
+    }
 
     @Autowired
     private ModelMapper mapper;

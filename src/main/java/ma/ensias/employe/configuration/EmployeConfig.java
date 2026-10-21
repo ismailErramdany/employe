@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EmployeConfig {
+    // added
+    private static final String DB_PASSWORD = "admin123";
+    private static final String API_TOKEN = "password=SuperSecret2026";
 
     @Bean
     public EmployeService employeBean() {
