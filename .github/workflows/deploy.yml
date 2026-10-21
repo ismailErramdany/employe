@@ -34,16 +34,12 @@ jobs:
       # 4. Compilation, exécution des tests connectés à RDS et analyse SonarQube
       - name: Build, Test & Sonar Analysis
         env:
-          # Injection des secrets de votre base de données RDS
           SPRING_DATASOURCE_URL: ${{ secrets.DB_URL }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
-          # Jeton pour l'analyse de code Sonar
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
         run: |
-          mvn clean verify \
-            -Dspring.datasource.url="${{ secrets.DB_URL }}" \
-            -Dspring.datasource.username="${{ secrets.DB_USERNAME }}" \
-            -Dspring.datasource.password="${{ secrets.DB_PASSWORD }}"
+          mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=ismailErramdany_employe \
+            -Dsonar.organization=ismailerramdany \
+            -Dsonar.host.url=https://sonarcloud.io
